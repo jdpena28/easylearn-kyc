@@ -20,7 +20,7 @@ const App = () => {
   ]
   return (
     <Layout>
-      <StepIndicator stepColor2={"secondary"} stepColor3={"secondary"} />
+      <StepIndicator stepColor2={"bg-secondary"} stepColor3={"bg-secondary"} />
       <div className='relative container mx-auto'>
         <h3 className='font-bold text-2xl'>Personal Information</h3>
         <div className='mx-auto max-w-6xl'>
