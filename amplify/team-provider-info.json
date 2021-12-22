@@ -1,0 +1,15 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-easylearnkyc-dev-94849-authRole",
+      "UnauthRoleArn": "arn:aws:iam::488756103694:role/amplify-easylearnkyc-dev-94849-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::488756103694:role/amplify-easylearnkyc-dev-94849-authRole",
+      "Region": "ap-southeast-1",
+      "DeploymentBucketName": "amplify-easylearnkyc-dev-94849-deployment",
+      "UnauthRoleName": "amplify-easylearnkyc-dev-94849-unauthRole",
+      "StackName": "amplify-easylearnkyc-dev-94849",
+      "StackId": "arn:aws:cloudformation:ap-southeast-1:488756103694:stack/amplify-easylearnkyc-dev-94849/59b75b60-62c9-11ec-bafd-06fc28bd6b96",
+      "AmplifyAppId": "d3lyv4ky5zek61"
+    }
+  }
+}
