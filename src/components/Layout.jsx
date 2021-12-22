@@ -12,7 +12,7 @@ const Layout = ({children}) => {
           rel='stylesheet'
         ></link>
       </Head>
-      <div className="h-screen bg-gray-100 mx-8">
+      <div className="h-screen bg-gray-100 px-8">
           <nav className="py-3">
             <Image src={"/logo.png"} width={144} height={69} />
           </nav>
