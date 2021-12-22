@@ -16,7 +16,7 @@ const Layout = ({children}) => {
           <nav className="py-3">
             <Image src={"/logo.png"} width={144} height={69} />
           </nav>
-          <section className="font-primary">
+          <section className="font-primary px-24">
             {children}
           </section>
       </div>
