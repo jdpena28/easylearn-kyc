@@ -21,10 +21,10 @@ const App = () => {
   return (
     <Layout>
       <StepIndicator stepColor2={"secondary"} stepColor3={"secondary"} />
-      <div className='container mx-auto px-24'>
+      <div className='relative container mx-auto px-24'>
         <h3 className='font-bold text-2xl'>Personal Information</h3>
         <div className='mx-auto max-w-6xl'>
-          <form action=''>
+          <form action='' className='space-y-5'>
             <div className='flex justify-between mt-3'>
               {label.map((item) => {
                 return (
@@ -32,24 +32,30 @@ const App = () => {
                 )
               })}
             </div>
-            <div>
-              <div className='flex flex-col'>
-                <label
-                  className='text-xl font-semibold pl-1'
-                  htmlFor='lastName'
-                >
-                  Email
-                </label>
-                <input
-                  className='bg-gray-300 placeholder-slate-500 w-60 h-10 rounded-md pl-1'
-                  type='email'
-                  name='lastName'
-                  id='lastName'
-                  required
-                  placeholder='johndoe@email.com'
-                />
+            <div className='flex w-full'>
+              <label className='text-xl font-semibold pl-1' htmlFor='lastName'>
+                Email <br />
+					 <input
+                className='bg-gray-300 text-base placeholder-slate-500 w-60 h-10 rounded-md pl-1'
+                type='email'
+                name='lastName'
+                id='lastName'
+                required
+                placeholder='johndoe@email.com'
+              />
+              </label>
+              <div className='w-full pl-48'>
+                <h4 className='font-semibold text-2xl'>Example</h4>
+                <div className='absolute h-52 w-[40%] bg-gray-200'></div>
               </div>
-              
+            </div>
+            <div className='space-y-2'>
+              <p className='text-2xl font-bold'>Image Upload</p>
+              <p className='text-sm w-64 leading-none'>
+                *This will be used for final exam to verify your identity. See
+                the sample image for reference.
+              </p>
+              <input type='file' id='img' name='img' accept='image/*'></input>
             </div>
           </form>
         </div>
