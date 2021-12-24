@@ -2,6 +2,7 @@ import React from "react"
 import Layout from "../src/components/Layout"
 import StepIndicator from "../src/components/StepIndicator"
 import Input from "../src/components/Input"
+import {nanoid} from 'nanoid'
 
 const App = () => {
   const label = [
@@ -28,7 +29,7 @@ const App = () => {
             <div className='flex justify-between mt-3'>
               {label.map((item) => {
                 return (
-                  <Input label={item.label} placeholder={item.placeholder} />
+                  <Input key={nanoid()} label={item.label} placeholder={item.placeholder} />
                 )
               })}
             </div>
