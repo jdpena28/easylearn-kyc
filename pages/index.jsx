@@ -2,23 +2,16 @@ import React from "react"
 import Layout from "../src/components/Layout"
 import StepIndicator from "../src/components/StepIndicator"
 import Input from "../src/components/Input"
-import {nanoid} from 'nanoid'
+import { useState } from "react"
+import { nanoid } from "nanoid"
 
 const App = () => {
-  const label = [
-    {
-      label: "Last Name",
-      placeholder: "Doe",
-    },
-    {
-      label: "First Name",
-      placeholder: "John",
-    },
-    {
-      label: "Middle Name",
-      placeholder: "Michael",
-    },
-  ]
+  const [enrollee, setEnrollee] = useState({
+    LastName: "",
+    FirstName: "",
+    MiddleName: "",
+    Email:""
+  })
   return (
     <Layout>
       <StepIndicator stepColor2={"bg-secondary"} stepColor3={"bg-secondary"} />
@@ -27,23 +20,40 @@ const App = () => {
         <div className='mx-auto max-w-6xl'>
           <form action='' className='space-y-5'>
             <div className='flex justify-between mt-3'>
-              {label.map((item) => {
-                return (
-                  <Input key={nanoid()} label={item.label} placeholder={item.placeholder} />
-                )
-              })}
+              <Input
+                label='Last Name'
+                placeholder='Doe'
+                onChange={(e) => {
+                  setEnrollee({ ...enrollee, LastName: e.target.value })
+                }}
+              />
+              <Input
+                label='First Name'
+                placeholder='John'
+                onChange={(e) => {
+                  setEnrollee({ ...enrollee, FirstName: e.target.value })
+                }}
+              />
+              <Input
+                label='Middle Name'
+                placeholder='Michael'
+                onChange={(e) => {
+                  setEnrollee({ ...enrollee, MiddleName: e.target.value })
+                }}
+              />
             </div>
             <div className='flex w-full'>
               <label className='text-xl font-semibold pl-1' htmlFor='lastName'>
                 Email <br />
-					 <input
-                className='bg-gray-300 text-base placeholder-slate-500 w-60 h-10 rounded-md pl-1'
-                type='email'
-                name='lastName'
-                id='lastName'
-                required
-                placeholder='johndoe@email.com'
-              />
+                <input
+                  className='bg-gray-300 text-base placeholder-slate-500 w-60 h-10 rounded-md pl-1'
+                  type='email'
+                  name='lastName'
+                  id='lastName'
+                  onChange={(e) => {setEnrollee({ ...enrollee, Email: e.target.value })}}
+                  required
+                  placeholder='johndoe@email.com'
+                />
               </label>
               <div className='w-full pl-48'>
                 <h4 className='font-semibold text-2xl'>Example</h4>
