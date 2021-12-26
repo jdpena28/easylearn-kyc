@@ -10,7 +10,7 @@ const App = () => {
     LastName: "",
     FirstName: "",
     MiddleName: "",
-    Email:""
+    Email: "",
   })
   return (
     <Layout>
@@ -42,31 +42,39 @@ const App = () => {
                 }}
               />
             </div>
-            <div className='flex w-full'>
-              <label className='text-xl font-semibold pl-1' htmlFor='lastName'>
-                Email <br />
-                <input
-                  className='bg-gray-300 text-base placeholder-slate-500 w-60 h-10 rounded-md pl-1'
-                  type='email'
-                  name='lastName'
-                  id='lastName'
-                  onChange={(e) => {setEnrollee({ ...enrollee, Email: e.target.value })}}
-                  required
-                  placeholder='johndoe@email.com'
-                />
-              </label>
-              <div className='w-full pl-48'>
-                <h4 className='font-semibold text-2xl'>Example</h4>
-                <div className='absolute h-52 w-[40%] bg-gray-200'></div>
+
+            <div className='grid grid-cols-5 justify-end'>
+              <div className='space-y-2'>
+                <div className='flex w-full'>
+                  <label
+                    className='text-xl font-semibold pl-1 mb-5'
+                    htmlFor='lastName'
+                  >
+                    Email <br />
+                    <input
+                      className='bg-gray-300 text-base placeholder-slate-500 w-60 h-10 rounded-md pl-1'
+                      type='email'
+                      name='lastName'
+                      id='lastName'
+                      onChange={(e) => {
+                        setEnrollee({ ...enrollee, Email: e.target.value })
+                      }}
+                      required
+                      placeholder='johndoe@email.com'
+                    />
+                  </label>
+                </div>
+                <p className='text-2xl font-bold'>Image Upload</p>
+                <p className='text-sm w-64 leading-none'>
+                  *This will be used for final exam to verify your identity. See
+                  the sample image for reference.
+                </p>
+                <input type='file' id='img' name='img' accept='image/*'></input>
               </div>
-            </div>
-            <div className='space-y-2'>
-              <p className='text-2xl font-bold'>Image Upload</p>
-              <p className='text-sm w-64 leading-none'>
-                *This will be used for final exam to verify your identity. See
-                the sample image for reference.
-              </p>
-              <input type='file' id='img' name='img' accept='image/*'></input>
+              <div className='col-span-3 col-start-3'>
+                <h4 className='font-semibold text-2xl'>Example</h4>
+                <div className='h-52 w-[66%] bg-gray-200'></div>
+              </div>
             </div>
           </form>
         </div>
