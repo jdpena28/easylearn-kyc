@@ -2,8 +2,9 @@ import React from "react"
 import Layout from "../src/components/Layout"
 import StepIndicator from "../src/components/StepIndicator"
 import Input from "../src/components/Input"
+import Button from "../src/components/Button"
 import { useState } from "react"
-import { nanoid } from "nanoid"
+
 
 const App = () => {
   const [enrollee, setEnrollee] = useState({
@@ -79,6 +80,7 @@ const App = () => {
           </form>
         </div>
       </div>
+      <Button/>
     </Layout>
   )
 }
