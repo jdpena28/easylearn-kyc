@@ -1,10 +1,18 @@
-import React from "react"
+import {useRef,useCallback,useState} from "react"
 import Head from "next/head"
 import Layout from "../src/components/Layout"
 import StepIndicator from "../src/components/StepIndicator"
 import Webcam from "react-webcam"
 
 const Step2 = () => {
+  const webcamRef = useRef(null)
+  const [imgsrc,setImgsrc] = useState(null)
+  const capture = useCallback(
+    () => {
+      setImgsrc(webcamRef.current.getScreenshot())
+    },
+    [webcamRef]
+  );
   return (
     <Layout>
       <Head>
@@ -19,11 +27,13 @@ const Step2 = () => {
             mirrored={true}
             className='mx-auto'
             screenshotFormat='image/jpeg'
+            ref={webcamRef}
             width={480}
           />
         </div>
-        <button className="bg-slate-500 p-3 text-white w-32">Capture</button>
+        <button onClick={capture} className="bg-slate-700 p-3 text-white w-32">Capture</button>
       </div>
+      <img src={imgsrc} alt="asdas" width={320} height={320}/>
     </Layout>
   )
 }
