@@ -15,7 +15,7 @@ const App = () => {
     Email: "",
   })
   return (
-    <Layout>
+    <Layout title={'Step 1 - Personal Information'}>
       <StepIndicator stepColor2={"bg-secondary"} stepColor3={"bg-secondary"} />
       <div className='container mx-auto'>
         <h3 className='font-bold text-2xl'>Personal Information</h3>

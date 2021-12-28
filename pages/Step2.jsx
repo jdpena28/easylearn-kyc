@@ -35,13 +35,10 @@ const Step2 = () => {
  
   
   return (
-    <Layout>
-      <Head>
-        <title>Step 2 - Facial Identity</title>
-      </Head>
+    <Layout title={'Step 2 - Facial Identit'}>
       <StepIndicator stepColor2={"bg-highlight"} stepColor3={"bg-secondary"} />
       <div className='container mx-auto text-center space-y-4'>
-        <h3 className='font-bold text-2xl text-left'>Let's take a picture of you</h3>
+        <h3 className='font-bold text-2xl text-left'>Let&apos;s take a picture of you</h3>
         <div className='relative mx-auto w-max flex'>
           <Webcam
             audio={false}

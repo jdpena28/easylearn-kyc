@@ -6,10 +6,7 @@ import StepIndicator from '../src/components/StepIndicator'
 import Button from '../src/components/Button'
 const Error = () => {
     return (
-        <Layout>
-      <Head>
-        <title>Verification Failed</title>
-      </Head>
+      <Layout title={"Verification Failed"}>
       <StepIndicator stepColor2={"bg-highlight"} stepColor3={"bg-highlight"} />
       <div className=' w-max h-max  absolute text-center inset-0 my-auto mx-auto'>
         <Image src={"/failed.png"} alt='red error x mark' height={150} width={150} />

@@ -7,10 +7,7 @@ import Button from '../src/components/Button'
 
 const Step3 = () => {
   return (
-    <Layout>
-      <Head>
-        <title>Step 3 - Succesfully Verified</title>
-      </Head>
+    <Layout title={'Step 3 - Succesfully Verified'}>
       <StepIndicator stepColor2={"bg-highlight"} stepColor3={"bg-highlight"} />
       <div className=' w-max h-max  absolute text-center inset-0 my-auto mx-auto'>
         <Image src={"/success.png"} alt="green checkmark" height={150} width={150} />
