@@ -1,10 +1,10 @@
 import { useRef, useState,useCallback } from "react"
-import Layout from "../src/components/Layout"
-import Input from "../src/components/Input"
-import Button from "../src/components/Button"
+import Layout from "../../src/components/Layout"
+import Input from "../../src/components/Input"
+import Button from "../../src/components/Button"
 import Webcam from "react-webcam"
 
-import useUpdateEffect from '../src/hooks/useUpdateEffect'
+import useUpdateEffect from '../../src/hooks/useUpdateEffect'
 
 const App = () => {
   const [enrollee, setEnrollee] = useState({
@@ -110,11 +110,11 @@ const App = () => {
                    </div>}
                  </div>
                   )}
-                  <button type="button" onClick={captureImg} className="bg-slate-700 p-3 text-white w-32">Capture</button>
+                  {(showBtnCapture&&openCamera) && <button type="button" onClick={captureImg} className="bg-slate-700 p-3 text-white w-32">Capture</button>}
                 </div>
               </div>
             </div>
-            <Button link={"/Step2"} btnText='NEXT' btnType={"submit"} />
+            <Button link={"/Exam/ExamCoupon"} btnText='NEXT' btnType={"submit"} />
           </form>
         </div>
       </div>
