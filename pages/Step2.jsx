@@ -19,7 +19,7 @@ const Step2 = () => {
         <title>Step 2 - Facial Identity</title>
       </Head>
       <StepIndicator stepColor2={"bg-highlight"} stepColor3={"bg-secondary"} />
-      <div className='relative container mx-auto text-center space-y-4'>
+      <div className='container mx-auto text-center space-y-4'>
         <h3 className='font-bold text-2xl text-left'>Let's take a picture of you</h3>
         <div className='mx-auto max-w-6xl'>
           <Webcam

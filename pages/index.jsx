@@ -3,6 +3,7 @@ import Layout from "../src/components/Layout"
 import StepIndicator from "../src/components/StepIndicator"
 import Input from "../src/components/Input"
 import Button from "../src/components/Button"
+import Image from "next/image"
 import { useState } from "react"
 
 
@@ -16,7 +17,7 @@ const App = () => {
   return (
     <Layout>
       <StepIndicator stepColor2={"bg-secondary"} stepColor3={"bg-secondary"} />
-      <div className='relative container mx-auto'>
+      <div className='container mx-auto'>
         <h3 className='font-bold text-2xl'>Personal Information</h3>
         <div className='mx-auto max-w-6xl'>
           <form action='' className='space-y-5'>
@@ -74,13 +75,15 @@ const App = () => {
               </div>
               <div className='col-span-3 col-start-3'>
                 <h4 className='font-semibold text-2xl'>Example</h4>
-                <div className='h-52 w-[66%] bg-gray-200'></div>
+                <div className='h-max w-[66%] p-2 bg-gray-200'>
+                  <Image src={'/sample_id.png'} width={441} height={282}/>
+                </div>
               </div>
             </div>
+            <Button/>
           </form>
         </div>
       </div>
-      <Button/>
     </Layout>
   )
 }
