@@ -1,5 +1,3 @@
-import React from 'react'
-import Head from 'next/head'
 import Image from 'next/image'
 import Layout from '../src/components/Layout'
 import StepIndicator from '../src/components/StepIndicator'
