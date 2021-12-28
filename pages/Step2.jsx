@@ -1,5 +1,4 @@
-import {useRef,useEffect,useCallback,useState} from "react"
-import Head from "next/head"
+import {useRef,useCallback,useState} from "react"
 import Layout from "../src/components/Layout"
 import StepIndicator from "../src/components/StepIndicator"
 import Button from '../src/components/Button'

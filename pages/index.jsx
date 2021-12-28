@@ -1,4 +1,3 @@
-import React from "react"
 import Layout from "../src/components/Layout"
 import StepIndicator from "../src/components/StepIndicator"
 import Input from "../src/components/Input"
