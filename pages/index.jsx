@@ -20,7 +20,7 @@ const App = () => {
       <div className='container mx-auto'>
         <h3 className='font-bold text-2xl'>Personal Information</h3>
         <div className='mx-auto max-w-6xl'>
-          <form action='' className='space-y-5'>
+          <form  className='space-y-5'>
             <div className='flex justify-between mt-3'>
               <Input
                 label='Last Name'
@@ -80,7 +80,7 @@ const App = () => {
                 </div>
               </div>
             </div>
-            <Button/>
+            <Button link={'/Step2'} btnText="NEXT" btnType={"submit"}/>
           </form>
         </div>
       </div>

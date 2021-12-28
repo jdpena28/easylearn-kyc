@@ -2,6 +2,7 @@ import {useRef,useCallback,useState} from "react"
 import Head from "next/head"
 import Layout from "../src/components/Layout"
 import StepIndicator from "../src/components/StepIndicator"
+import Button from '../src/components/Button'
 import Webcam from "react-webcam"
 
 const Step2 = () => {
@@ -33,6 +34,7 @@ const Step2 = () => {
         </div>
         <button onClick={capture} className="bg-slate-700 p-3 text-white w-32">Capture</button>
       </div>
+      <Button link={'/Step3'} btnText={'NEXT'} btnType={'button'}/>
       <img src={imgsrc} alt="asdas" width={320} height={320}/>
     </Layout>
   )
