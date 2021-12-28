@@ -13,7 +13,7 @@ const Step3 = () => {
       </Head>
       <StepIndicator stepColor2={"bg-highlight"} stepColor3={"bg-highlight"} />
       <div className=' w-max h-max  absolute text-center inset-0 my-auto mx-auto'>
-        <Image src={"/success.png"} height={150} width={150} />
+        <Image src={"/success.png"} alt="green checkmark" height={150} width={150} />
         <h3 className='text-3xl font-bold'>Verification Success</h3>
         <p className='text-lg'>
           You have been successfully verified. <br /> You can now go back to

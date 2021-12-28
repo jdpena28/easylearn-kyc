@@ -76,7 +76,7 @@ const App = () => {
               <div className='col-span-3 col-start-3'>
                 <h4 className='font-semibold text-2xl'>Example</h4>
                 <div className='h-max w-[66%] p-2 bg-gray-200'>
-                  <Image src={'/sample_id.png'} width={441} height={282}/>
+                  <Image src={'/sample_id.png'} alt="Sample ID Pic" width={441} height={282}/>
                 </div>
               </div>
             </div>
