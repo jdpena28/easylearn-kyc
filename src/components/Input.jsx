@@ -9,7 +9,7 @@ const Input = ({ label, placeholder,onChange }) => {
         {label}
       </label>
       <input
-        className='bg-gray-300 placeholder-slate-500 w-60 h-10 rounded-md pl-1'
+        className='bg-gray-300 placeholder-slate-500 w-60 sm:w-full h-10 rounded-md pl-1'
         type='text'
         name={label.trim()}
         id={label.trim()}
