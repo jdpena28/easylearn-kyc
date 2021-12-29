@@ -36,13 +36,13 @@ const Step2 = () => {
   return (
     <Layout title={'Step 2 - Facial Identit'}>
       <StepIndicator stepColor2={"bg-highlight"} stepColor3={"bg-secondary"} />
-      <div className='container mx-auto text-center space-y-4'>
+      <div className='container mx-auto text-center space-y-4 sm:my-4'>
         <h3 className='font-bold text-2xl text-left'>Let&apos;s take a picture of you</h3>
-        <div className='relative mx-auto w-max flex'>
+        <div className='relative mx-auto w-max sm:w-full flex'>
           <Webcam
             audio={false}
             mirrored={true}
-            className='mx-auto'
+            className='mx-auto sm:w-[90%]'
             screenshotFormat='image/jpeg'
             ref={webcamRef}
             width={480}
