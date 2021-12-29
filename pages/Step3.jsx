@@ -16,7 +16,7 @@ const Step3 = () => {
   return (
     <Layout title={"Step 3 - Succesfully Verified"}>
       <StepIndicator stepColor2={"bg-highlight"} stepColor3={"bg-highlight"} />
-      <div className=' w-max h-max  absolute text-center inset-0 m-auto'>
+      <div className=' w-max sm:w-full h-max  absolute sm:block text-center inset-0 m-auto'>
         {isLoading ? (
           <div className="flex flex-col justify-center items-center gap-y-7">
             <CircleLoader
@@ -46,6 +46,7 @@ const Step3 = () => {
       <Button
         btnType={"button"}
         btnText={"Go Back"}
+        classname={"sm:absolute bottom-3 right-4"}
         link={
           "https://www.easylearn.ph/s/courses/61bc5b540cf2cc9c9c47f220/take"
         }
