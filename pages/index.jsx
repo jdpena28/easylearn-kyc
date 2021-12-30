@@ -75,7 +75,7 @@ const App = () => {
               <div className='col-span-3 col-start-3'>
                 <h4 className='font-semibold text-2xl'>Example</h4>
                 <div className='h-max w-[66%] sm:w-full p-2 sm:p-0 bg-gray-200'>
-                  <Image src={'/sample_id.png'} alt="Sample ID Pic" width={441} height={282}/>
+                  <Image src={'/sample_id.webp'} alt="Sample ID Pic" width={441} height={282}/>
                 </div>
               </div>
             </div>

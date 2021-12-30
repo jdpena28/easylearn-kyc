@@ -30,7 +30,7 @@ const Step3 = () => {
         ) : (
           <>
             <Image
-              src={"/success.png"}
+              src={"/success.webp"}
               alt='green checkmark'
               height={150}
               width={150}

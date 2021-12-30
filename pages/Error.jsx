@@ -7,7 +7,7 @@ const Error = () => {
       <Layout title={"Verification Failed"}>
       <StepIndicator stepColor2={"bg-highlight"} stepColor3={"bg-highlight"} />
       <div className=' w-max sm:w-full h-max  absolute text-center inset-0 my-auto mx-auto'>
-        <Image src={"/failed.png"} alt='red error x mark' height={150} width={150} />
+        <Image src={"/failed.webp"} alt='red error x mark' height={150} width={150} />
         <h3 className='text-3xl font-bold'>Verification Failed</h3>
         <p className='text-lg'>
           Verification Error, <br /> You can go back and try again to verify your identity.
