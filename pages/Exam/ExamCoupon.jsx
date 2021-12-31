@@ -29,7 +29,7 @@ const ExamCoupon = () => {
 
   return (
     <Layout title={"Exam Coupon Code"}>
-      <div className=' w-max h-max  absolute text-center inset-0 my-auto mx-auto space-y-1'>
+      <div className=' w-max sm:w-full h-max  absolute  text-center inset-0 my-auto mx-auto space-y-1'>
         {isLoading?(
         <div className='flex flex-col justify-center items-center gap-y-7'>
           <CircleLoader
@@ -62,6 +62,7 @@ const ExamCoupon = () => {
       <Button
         btnType={"button"}
         btnText={"Go Back"}
+        classname={"sm:absolute bottom-3 right-4"}
         link={"https://www.easylearn.ph/s/accesscode"}
       />
     </Layout>
