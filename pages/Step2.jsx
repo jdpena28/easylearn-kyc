@@ -42,7 +42,7 @@ const Step2 = () => {
           <Webcam
             audio={false}
             mirrored={true}
-            className='mx-auto sm:w-[90%]'
+            className='mx-auto sm:w-full'
             screenshotFormat='image/jpeg'
             ref={webcamRef}
             width={480}
