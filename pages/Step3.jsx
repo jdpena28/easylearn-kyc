@@ -16,7 +16,7 @@ const Step3 = () => {
   return (
     <Layout title={"Step 3 - Succesfully Verified"}>
       <StepIndicator stepColor2={"bg-highlight"} stepColor3={"bg-highlight"} />
-      <div className=' w-max sm:w-full h-max  absolute sm:block text-center inset-0 m-auto'>
+      <div className=' w-max sm:w-full h-max  absolute text-center inset-0 m-auto'>
         {isLoading ? (
           <div className="flex flex-col justify-center items-center gap-y-7">
             <CircleLoader
