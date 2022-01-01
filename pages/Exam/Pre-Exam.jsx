@@ -1,5 +1,5 @@
 import { useRef, useState, useCallback, useContext } from "react"
-import DataContext from "../src/context/DataContext"
+import DataContext from "../../src/context/DataContext"
 import Layout from "../../src/components/Layout"
 import Input from "../../src/components/Input"
 import Button from "../../src/components/Button"
