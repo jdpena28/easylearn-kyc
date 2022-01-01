@@ -5,7 +5,7 @@ import Button from "../src/components/Button"
 import Image from "next/image"
 import {useContext} from "react"
 
-import DataContext, { DataProvider } from "../src/context/DataContext"
+import DataContext from "../src/context/DataContext"
 
 const App = () => {
   const {enrollee,setEnrollee} = useContext(DataContext)
@@ -15,6 +15,7 @@ const App = () => {
       <div className='container mx-auto'>
         <h3 className='font-bold text-2xl sm:text-center sm:mt-4'>Personal Information</h3>
         <div className='mx-auto max-w-6xl sm:max-w-full'>
+
           <form  className='space-y-2'>
             <div className='flex sm:block justify-between mt-3 sm:space-y-2'>
               <Input
@@ -66,7 +67,7 @@ const App = () => {
                   *This will be used for final exam to verify your identity. See
                   the sample image for reference.
                 </p>
-                <input type='file' id='img' name='img' accept='image/*'></input>
+                <input ref={imageRef} type='file' id='img' name='img' accept='image/*'></input>
               </div>
               <div className='col-span-3 col-start-3'>
                 <h4 className='font-semibold text-2xl'>Example</h4>
