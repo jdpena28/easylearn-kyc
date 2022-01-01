@@ -3,16 +3,12 @@ import StepIndicator from "../src/components/StepIndicator"
 import Input from "../src/components/Input"
 import Button from "../src/components/Button"
 import Image from "next/image"
-import { useState } from "react"
+import {useContext} from "react"
 
+import DataContext, { DataProvider } from "../src/context/DataContext"
 
 const App = () => {
-  const [enrollee, setEnrollee] = useState({
-    LastName: "",
-    FirstName: "",
-    MiddleName: "",
-    Email: "",
-  })
+  const {enrollee,setEnrollee} = useContext(DataContext)
   return (
     <Layout title={'Step 1 - Personal Information'}>
       <StepIndicator stepColor2={"bg-secondary"} stepColor3={"bg-secondary"} />

@@ -6,10 +6,15 @@ import Button from "../src/components/Button"
 
 import CircleLoader from "react-spinners/CircleLoader"
 
+import DataContext from "../src/context/DataContext"
+import { useContext } from "react"
+
 const Step3 = () => {
   const [isLoading, setIsLoading] = useState(true)
+  const {enrollee} = useContext(DataContext)
   useEffect(() => {
     setTimeout(() => {
+      alert(`${enrollee.FirstName} ${enrollee.LastName}`)
       setIsLoading(false)
     }, 2000)
   }, [])
