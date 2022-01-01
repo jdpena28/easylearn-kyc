@@ -1,4 +1,5 @@
-import { useRef, useState, useCallback } from "react"
+import { useRef, useState, useCallback, useContext } from "react"
+import DataContext from "../src/context/DataContext"
 import Layout from "../../src/components/Layout"
 import Input from "../../src/components/Input"
 import Button from "../../src/components/Button"
@@ -7,12 +8,8 @@ import Webcam from "react-webcam"
 import useUpdateEffect from "../../src/hooks/useUpdateEffect"
 
 const App = () => {
-  const [enrollee, setEnrollee] = useState({
-    LastName: "",
-    FirstName: "",
-    MiddleName: "",
-  })
-
+  const {enrollee,setEnrollee} = useContext(DataContext)
+  
   const webcamRef = useRef(null)
   const [openCamera, setOpenCamera] = useState(false)
   const [showBtnCapture, setShowBtnCapture] = useState(false)
