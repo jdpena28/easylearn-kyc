@@ -1,34 +1,37 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Easylearn - KYC (Know Your Customer)
+A Next.js React Application for Implementation of KYC specifically for Easylearn Course for Theoretical Driving Course of Drive Smart. This is based for LTO Recommendation or Guide.
+## Developers Guide
+**IMPORTANT NOTE: You can check the AWS Architeture Solution at Diagrams.net - [KYC-NextJS](https://app.diagrams.net/#G1Tuj6wAzT2WwfNz_h2cvCeRrprnUWghSW)**
+1. Sign up for an AWS account
+2. Install the AWS Amplify cli:\
+`npm install -g @aws-amplify/cli`
+3. Configure amplify in the console:amplify configure\
+`amplify configure` \
+For more information about aws amplify configuration click the [Guide](https://docs.amplify.aws/cli/#extensibility)
 
-## Getting Started
+**Installing Dependencies** \
+_Be sure to have Node.js installed in the computer_ \
+`npm install` \
+`npm run dev` 
 
-First, run the development server:
+Check localhost:3000 or any ports prompted to the CLI if the Application is running.
 
-```bash
-npm run dev
-# or
-yarn dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### TO-DO's 📝
+☐ Configure Backend using GraphQL and Dynamo DB with the help of `amplify add api` \
+☐ OPTIONAL BUT IS A MUST : Deploy infrastructure using `amplify push` \
+☐ Edit GraphQL Schema that defaultly created by AMPLIFY Refer also to Youtube Videos. \
+☐ Configure AWS S3 Bucket for Storing Images to use \
+☐ Use the GraphQL API to store the the data of learners stored in Temporary Storage (CONTEXT API) \
+☐ Configuration of AWS Rekognition for Compairing Faces \
+☐ Refactore Code for Loading Animation for Compairing Faces Routes User speficially if Error or Successful 
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+### OPTIMIZATION
+Apply **React [Memoization](https://www.qed42.com/insights/coe/javascript/optimize-your-react-app-performance-memoization)** to Prevent Unnecessary Re-renders in the Three Nodes of DOM. 
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Cause of Optimization: \
+We are using CONTEXT API for Storing States which we use on the root or index page the Context to avoid unnecessary re-render we must optimize the React Application 
+\ 
+2nd Option: \
+We can also checkout the new emerging state management instead of using Redux the [Zustand](https://github.com/pmndrs/zustand)
