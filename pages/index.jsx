@@ -3,24 +3,27 @@ import StepIndicator from "../src/components/StepIndicator"
 import Input from "../src/components/Input"
 import Button from "../src/components/Button"
 import Image from "next/image"
-import {useContext} from "react"
+import {useContext,useRef} from "react"
 import DataContext from "../src/context/DataContext"
 
-import { API, graphqlOperation } from 'aws-amplify'
+import { API, graphqlOperation, Storage } from 'aws-amplify'
 import {createEnrollees} from '../src/graphql/mutations'
 import { nanoid } from "nanoid"
 
 const App = () => {
   const {enrollee,setEnrollee} = useContext(DataContext)
+  const imgRef = useRef('')
   
-  /* const addEnrollee = async () => {
-    await API.graphql(graphqlOperation(createEnrollees, {
+  const addEnrollee = async () => {
+    /* await API.graphql(graphqlOperation(createEnrollees, {
       input: {
         ...enrollee
       }
-    }))
-  } */
+    })) */
+   /*  Storage.put(`Pre-Enrollment/${enrollee.LastName}${enrollee.FirstName}${enrollee.MiddleName}`, imgRef.current.files[0]) */
+  }
   
+
   return (
     <Layout title={'Step 1 - Personal Information'}>
       <StepIndicator stepColor2={"bg-secondary"} stepColor3={"bg-secondary"} />
@@ -52,7 +55,7 @@ const App = () => {
                 }}
               />
             </div>
-
+            
             <div className='grid sm:block grid-cols-5 justify-end sm:space-y-2'>
               <div className='space-y-2'>
                 <div className='flex sm:block w-full'>
@@ -79,7 +82,7 @@ const App = () => {
                   *This will be used for final exam to verify your identity. See
                   the sample image for reference.
                 </p>
-                <input type='file' id='img' name='img' accept='image/*'></input>
+                <input ref={imgRef} type='file' id='img' name='img' accept='image/*'></input>
               </div>
               <div className='col-span-3 col-start-3'>
                 <h4 className='font-semibold text-2xl'>Example</h4>
@@ -88,7 +91,9 @@ const App = () => {
                 </div>
               </div>
             </div>
+            <div onClick={addEnrollee}>
             <Button link={'/Step2'} btnText="NEXT" btnType={"button"}/>
+            </div>
           </form>
         </div>
       </div>
