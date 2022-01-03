@@ -10,6 +10,18 @@
       "StackName": "amplify-easylearnkyc-dev-94849",
       "StackId": "arn:aws:cloudformation:ap-southeast-1:488756103694:stack/amplify-easylearnkyc-dev-94849/59b75b60-62c9-11ec-bafd-06fc28bd6b96",
       "AmplifyAppId": "d3lyv4ky5zek61"
+    },
+    "categories": {
+      "auth": {
+        "easylearnkyc0576edee": {},
+        "true": {}
+      },
+      "function": {
+        "S3Triggerc61452e7": {
+          "deploymentBucketName": "amplify-easylearnkyc-dev-94849-deployment",
+          "s3Key": "amplify-builds/S3Triggerc61452e7-4a3844376e6b754f6b50-build.zip"
+        }
+      }
     }
   }
 }
