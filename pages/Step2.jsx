@@ -54,7 +54,7 @@ const Step2 = () => {
         </div>
         {showBtnCapture&&<button onClick={captureImg} className="bg-slate-700 p-3 text-white w-32">Capture</button>}
       </div>
-      <Button link={'/Step3'} btnText={'NEXT'} btnType={'button'}/>
+      <Button link={'/Step3'}  btnText={'NEXT'} btnType={'button'}/>
       <img src={imgsrc} alt="asd" width={450} height={450}/>
     </Layout>
   )

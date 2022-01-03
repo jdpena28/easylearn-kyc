@@ -9,15 +9,17 @@ import CircleLoader from "react-spinners/CircleLoader"
 import DataContext from "../src/context/DataContext"
 import { useContext } from "react"
 
+
 const Step3 = () => {
   const [isLoading, setIsLoading] = useState(true)
   const {enrollee} = useContext(DataContext)
   useEffect(() => {
     setTimeout(() => {
-      alert(`${enrollee.FirstName} ${enrollee.LastName}`)
       setIsLoading(false)
     }, 2000)
   }, [])
+
+ 
   return (
     <Layout title={"Step 3 - Succesfully Verified"}>
       <StepIndicator stepColor2={"bg-highlight"} stepColor3={"bg-highlight"} />
