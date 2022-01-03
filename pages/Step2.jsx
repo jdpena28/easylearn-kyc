@@ -27,10 +27,17 @@ const Step2 = () => {
   
   const screenshot = useCallback(
     () => {
+      getImg()
      /*  Storage.put(`Pre-Enrollment/Webcam/${enrollee.LastName}${enrollee.FirstName}${enrollee.MiddleName}`, webcamRef.current.getScreenshot()) */
     },
     [webcamRef]
   );
+
+  const getImg = async () =>{
+   /* const data = await Storage.get(`Pre-Enrollment/Webcam/DoeJohnMichael`,{expires:60})
+   console.log(data)
+   setImgsrc(data) */
+  }
 
   
   
