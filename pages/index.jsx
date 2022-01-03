@@ -4,11 +4,23 @@ import Input from "../src/components/Input"
 import Button from "../src/components/Button"
 import Image from "next/image"
 import {useContext} from "react"
-
 import DataContext from "../src/context/DataContext"
+
+import { API, graphqlOperation } from 'aws-amplify'
+import {createEnrollees} from '../src/graphql/mutations'
+import { nanoid } from "nanoid"
 
 const App = () => {
   const {enrollee,setEnrollee} = useContext(DataContext)
+  
+  /* const addEnrollee = async () => {
+    await API.graphql(graphqlOperation(createEnrollees, {
+      input: {
+        ...enrollee
+      }
+    }))
+  } */
+  
   return (
     <Layout title={'Step 1 - Personal Information'}>
       <StepIndicator stepColor2={"bg-secondary"} stepColor3={"bg-secondary"} />
@@ -67,7 +79,7 @@ const App = () => {
                   *This will be used for final exam to verify your identity. See
                   the sample image for reference.
                 </p>
-                <input ref={imageRef} type='file' id='img' name='img' accept='image/*'></input>
+                <input type='file' id='img' name='img' accept='image/*'></input>
               </div>
               <div className='col-span-3 col-start-3'>
                 <h4 className='font-semibold text-2xl'>Example</h4>
@@ -76,7 +88,7 @@ const App = () => {
                 </div>
               </div>
             </div>
-            <Button link={'/Step2'} btnText="NEXT" btnType={"submit"}/>
+            <Button link={'/Step2'} btnText="NEXT" btnType={"button"}/>
           </form>
         </div>
       </div>
