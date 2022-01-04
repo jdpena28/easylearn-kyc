@@ -13,7 +13,7 @@ import DataContext from "../src/context/DataContext"
 const Step2 = () => {
   const webcamRef = useRef(null)
   const {enrollee} = useContext(DataContext)
-  const [imgsrc,setImgsrc] = useState(null)
+  const [imgsrc,setImgsrc] = useState('')
   const [showBtnCapture,setShowBtnCapture] = useState(false)
   const [counter,setCounter] = useState(3)
 
@@ -28,15 +28,19 @@ const Step2 = () => {
   const screenshot = useCallback(
     () => {
       getImg()
-     /*  Storage.put(`Pre-Enrollment/Webcam/${enrollee.LastName}${enrollee.FirstName}${enrollee.MiddleName}`, webcamRef.current.getScreenshot()) */
+      /* const based64Image =  webcamRef.current.getScreenshot()
+      const type = based64Image.split(';')[0].split('/')[1];
+      const image = new Buffer.from(based64Image.replace(/^data:image\/\w+;base64,/, ""), 'base64');
+      Storage.put(`Pre-Enrollment/Webcam/${enrollee.LastName}${enrollee.FirstName}${enrollee.MiddleName}`,image,{
+        contentType: `image/${type}`, // return a jpeg type
+        contentEncoding: 'base64'
+      }) */
     },
     [webcamRef]
   );
 
   const getImg = async () =>{
-   /* const data = await Storage.get(`Pre-Enrollment/Webcam/DoeJohnMichael`,{expires:60})
-   console.log(data)
-   setImgsrc(data) */
+   const data = await Storage.get(`Pre-Enrollment/Webcam/DoeDoeDoe`,{expires:60})
   }
 
   
@@ -69,7 +73,6 @@ const Step2 = () => {
         {showBtnCapture&&<button onClick={captureImg} className="bg-slate-700 p-3 text-white w-32">Capture</button>}
       </div>
       <Button link={'/Step3'}  btnText={'NEXT'} btnType={'button'}/>
-      <img src={imgsrc} alt="asd" width={450} height={450}/>
     </Layout>
   )
 }
