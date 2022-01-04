@@ -8,7 +8,7 @@ import DataContext from "../src/context/DataContext"
 
 import { API, graphqlOperation, Storage } from 'aws-amplify'
 import {createEnrollees} from '../src/graphql/mutations'
-import { nanoid } from "nanoid"
+
 
 const App = () => {
   const {enrollee,setEnrollee} = useContext(DataContext)
