@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@aws-amplify/ui-react": "^1.2.26",
+    "@aws-sdk/client-rekognition": "^3.45.0",
     "aws-amplify": "^4.3.11",
     "nanoid": "^3.1.30",
     "next": "12.0.7",

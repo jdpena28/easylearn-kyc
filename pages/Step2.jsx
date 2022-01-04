@@ -10,10 +10,13 @@ import useUpdateEffect from '../src/hooks/useUpdateEffect'
 
 import DataContext from "../src/context/DataContext"
 
+import rekognitionClient from "../awsconfig"
+import { CompareFacesCommand } from "@aws-sdk/client-rekognition"
+
+
 const Step2 = () => {
   const webcamRef = useRef(null)
   const {enrollee} = useContext(DataContext)
-  const [imgsrc,setImgsrc] = useState('')
   const [showBtnCapture,setShowBtnCapture] = useState(false)
   const [counter,setCounter] = useState(3)
 
@@ -26,30 +29,60 @@ const Step2 = () => {
   }
   
   const screenshot = useCallback(
-    () => {
-      getImg()
-      /* const based64Image =  webcamRef.current.getScreenshot()
+     () => {
+      const based64Image =  webcamRef.current.getScreenshot()
       const type = based64Image.split(';')[0].split('/')[1];
       const image = new Buffer.from(based64Image.replace(/^data:image\/\w+;base64,/, ""), 'base64');
       Storage.put(`Pre-Enrollment/Webcam/${enrollee.LastName}${enrollee.FirstName}${enrollee.MiddleName}`,image,{
         contentType: `image/${type}`, // return a jpeg type
         contentEncoding: 'base64'
-      }) */
+      }).then(() => {
+        detectFaces()
+      })
     },
     [webcamRef]
   );
-
-  const getImg = async () =>{
-   const data = await Storage.get(`Pre-Enrollment/Webcam/DoeDoeDoe`,{expires:60})
-  }
-
   
-  
+
+ 
   useUpdateEffect(() => {
     counter > 0 && setTimeout(() => setCounter(counter - 1), 1000)
     counter == 0 && screenshot()
   } ,[counter])
  
+
+
+
+  const params = {
+    SourceImage: {
+      S3Object: {
+        Bucket: 'easylearnkyc94849-dev',
+        Name: `public/Pre-Enrollment/${enrollee.LastName}${enrollee.FirstName}${enrollee.MiddleName}`
+      },
+    },
+    TargetImage: {
+      S3Object: {
+        Bucket: 'easylearnkyc94849-dev',
+        Name: `public/Pre-Enrollment/Webcam/${enrollee.LastName}${enrollee.FirstName}${enrollee.MiddleName}`,
+    }   
+  }
+}
+
+  const detectFaces = async () => {
+    const command = new CompareFacesCommand(params)
+    await rekognitionClient.send(command)
+    .then(data => {
+      console.log(data)
+      if (data.FaceMatches.length == 0){
+        alert("No Match")
+      } else {
+        alert("Match")
+      }
+    }).catch(err => {
+      alert('No match')
+    })
+  }
+  
   
   return (
     <Layout title={'Step 2 - Facial Identity'}>

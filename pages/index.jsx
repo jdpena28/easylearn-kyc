@@ -10,6 +10,7 @@ import { API, graphqlOperation, Storage } from 'aws-amplify'
 import {createEnrollees} from '../src/graphql/mutations'
 
 
+
 const App = () => {
   const {enrollee,setEnrollee} = useContext(DataContext)
   const imgRef = useRef('')
@@ -20,7 +21,7 @@ const App = () => {
         ...enrollee
       }
     })) */
-   /*  Storage.put(`Pre-Enrollment/${enrollee.LastName}${enrollee.FirstName}${enrollee.MiddleName}`, imgRef.current.files[0]) */
+    Storage.put(`Pre-Enrollment/${enrollee.LastName}${enrollee.FirstName}${enrollee.MiddleName}`, imgRef.current.files[0]) 
   }
   
 
