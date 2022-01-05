@@ -74,6 +74,7 @@ const Step2 = () => {
         Name: `public/Pre-Enrollment/Webcam/${enrollee.LastName}${enrollee.FirstName}${enrollee.MiddleName}`,
       },
     },
+    SimilarityThreshold: 80
   }
 
 
