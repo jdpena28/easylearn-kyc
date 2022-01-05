@@ -4,17 +4,31 @@ import Layout from "../../src/components/Layout"
 import Input from "../../src/components/Input"
 import Button from "../../src/components/Button"
 import Webcam from "react-webcam"
+import CircleLoader from "react-spinners/CircleLoader"
 
 import useUpdateEffect from "../../src/hooks/useUpdateEffect"
 
+import {API,graphqlOperation} from 'aws-amplify'
+import { listEnrollees } from "../../src/graphql/queries"
+
+import rekognitionClient from "../../awsconfig"
+import { CompareFacesCommand } from "@aws-sdk/client-rekognition"
+
+import {useRouter} from 'next/router'
+
+import { Storage } from "aws-amplify"
+
 const App = () => {
   const {enrollee,setEnrollee} = useContext(DataContext)
-  
   const webcamRef = useRef(null)
   const [openCamera, setOpenCamera] = useState(false)
   const [showBtnCapture, setShowBtnCapture] = useState(false)
   const [counter, setCounter] = useState(3)
-  const [imgsrc, setImgsrc] = useState(null)
+  const [imgsrc, setImgsrc] = useState('')
+  const [isLoading, setIsLoading] = useState(false)
+  
+
+  const router = useRouter()
 
   const captureImg = () => {
     if (counter == 0) {
@@ -32,9 +46,90 @@ const App = () => {
     setImgsrc(webcamRef.current.getScreenshot())
   }, [webcamRef])
 
+  const imageUpload = async () => {
+    setIsLoading(true)
+    const type = imgsrc.split(";")[0].split("/")[1]
+    const image = new Buffer.from(
+      imgsrc.replace(/^data:image\/\w+;base64,/, ""),
+      "base64"
+    )
+    Storage.put(
+      `Pre-Exam-Webcam/${enrollee.LastName}${enrollee.FirstName}${enrollee.MiddleName}`,
+      image,
+      {
+        contentType: `image/${type}`, // return a jpeg type
+        contentEncoding: "base64",
+      }
+    ).then(() => {
+      detectFaces()
+    })
+  }
+
+  // fetch data from API and check if enrollee is already in the database
+  const checkEnrollee = async () => {
+    await API.graphql(
+      graphqlOperation(listEnrollees, {
+        filter: {
+          LastName: {
+            eq: enrollee.LastName,
+          },
+          FirstName: {
+            eq: enrollee.FirstName,
+          },
+          MiddleName: {
+            eq: enrollee.MiddleName,
+          },
+        },
+      })
+    )
+      .then((res) => {
+        if (res.data.listEnrollees.items.length > 0) {
+          imageUpload()
+        } else {
+          alert("It seems you are not verified enrollee")
+        }
+      })
+      .catch((err) => console.log(err))
+  }
+
+  const params = {
+    SourceImage: {
+      S3Object: {
+        Bucket: "easylearnkyc94849-dev",
+        Name: `public/Pre-Exam-Webcam/${enrollee.LastName}${enrollee.FirstName}${enrollee.MiddleName}`,
+      },
+    },
+    TargetImage: {
+      S3Object: {
+        Bucket: "easylearnkyc94849-dev",
+        Name: `public/Pre-Enrollment/${enrollee.LastName}${enrollee.FirstName}${enrollee.MiddleName}`,
+      },
+    },
+    SimilarityThreshold: 80
+  }
+
+
+  const detectFaces = async () => {
+    const command = new CompareFacesCommand(params)
+    await rekognitionClient
+      .send(command)
+      .then((data) => {
+        console.log(data)
+        if (data.FaceMatches.length == 0) {
+          router.push('/Exam/Error')
+        } else {
+          router.push("/Exam/ExamCoupon")
+        }
+      })
+      .catch((err) => { 
+        router.push("/Exam/Error")
+      })
+  }
+
+  
   return (
     <Layout title={"Pre-exam Identification"}>
-      <div className='container mx-auto'>
+     {!isLoading && <div className='container mx-auto'>
         <h3 className='font-bold text-2xl'>Pre-exam Identification</h3>
         <div className='mx-auto max-w-6xl sm:max-w-full'>
           <form className='space-y-5'>
@@ -153,14 +248,27 @@ const App = () => {
                 </div>
               </div>
             </div>
-            <Button
-              link={"/Exam/ExamCoupon"}
-              btnText='NEXT'
-              btnType={"submit"}
-            />
+            <div onClick={checkEnrollee}>
+              <Button
+                link={"/Exam/Pre-Exam"}
+                btnText='NEXT'
+                btnType={"submit"}
+              />
+            </div>
           </form>
         </div>
-      </div>
+      </div>}
+      {isLoading && <div className='z-50  absolute mx-auto inset-0 flex flex-col justify-center items-center gap-y-7'>
+        <CircleLoader
+          color={"#0000FF"}
+          className='my-auto'
+          loading={isLoading}
+          size={150}
+        />
+        <h3 className='text-3xl sm:text-xl font-bold'>
+          Face Cross Matching Please wait ...
+        </h3>
+      </div>}
     </Layout>
   )
 }
