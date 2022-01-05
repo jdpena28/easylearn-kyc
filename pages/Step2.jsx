@@ -1,94 +1,120 @@
-import {useRef,useCallback,useState,useContext} from "react"
+import { useRef, useCallback, useState, useContext,useEffect } from "react"
+import Image from 'next/image'
 import Layout from "../src/components/Layout"
 import StepIndicator from "../src/components/StepIndicator"
-import Button from '../src/components/Button'
+import Button from "../src/components/Button"
 import Webcam from "react-webcam"
+import CircleLoader from "react-spinners/CircleLoader"
 
 import { Storage } from "aws-amplify"
 
-import useUpdateEffect from '../src/hooks/useUpdateEffect'
+import useUpdateEffect from "../src/hooks/useUpdateEffect"
 
 import DataContext from "../src/context/DataContext"
 
 import rekognitionClient from "../awsconfig"
 import { CompareFacesCommand } from "@aws-sdk/client-rekognition"
 
+import { API, graphqlOperation } from "aws-amplify"
+import { createEnrollees } from "../src/graphql/mutations"
+
+import { useRouter } from "next/router"
 
 const Step2 = () => {
   const webcamRef = useRef(null)
-  const {enrollee} = useContext(DataContext)
-  const [showBtnCapture,setShowBtnCapture] = useState(false)
-  const [counter,setCounter] = useState(3)
+  const { enrollee } = useContext(DataContext)
+  const [showBtnCapture, setShowBtnCapture] = useState(false)
+  const [counter, setCounter] = useState(3)
+  const [isLoading, setIsLoading] = useState(false)
+
+  const router = useRouter()
 
   const captureImg = () => {
-    if (counter==0){
+    if (counter == 0) {
       setCounter(3)
     } else {
-      setCounter(counter-1)
+      setCounter(counter - 1)
     }
   }
-  
-  const screenshot = useCallback(
-     () => {
-      const based64Image =  webcamRef.current.getScreenshot()
-      const type = based64Image.split(';')[0].split('/')[1];
-      const image = new Buffer.from(based64Image.replace(/^data:image\/\w+;base64,/, ""), 'base64');
-      Storage.put(`Pre-Enrollment/Webcam/${enrollee.LastName}${enrollee.FirstName}${enrollee.MiddleName}`,image,{
-        contentType: `image/${type}`, // return a jpeg type
-        contentEncoding: 'base64'
-      }).then(() => {
-        detectFaces()
-      })
-    },
-    [webcamRef]
-  );
-  
 
- 
+  const screenshot = useCallback(() => {
+    const based64Image = webcamRef.current.getScreenshot()
+    const type = based64Image.split(";")[0].split("/")[1]
+    const image = new Buffer.from(
+      based64Image.replace(/^data:image\/\w+;base64,/, ""),
+      "base64"
+    )
+    Storage.put(
+      `Pre-Enrollment/Webcam/${enrollee.LastName}${enrollee.FirstName}${enrollee.MiddleName}`,
+      image,
+      {
+        contentType: `image/${type}`, // return a jpeg type
+        contentEncoding: "base64",
+      }
+    ).then(() => {
+      alert("Image saved")
+    })
+  }, [webcamRef])
+
   useUpdateEffect(() => {
     counter > 0 && setTimeout(() => setCounter(counter - 1), 1000)
     counter == 0 && screenshot()
-  } ,[counter])
- 
-
-
+  }, [counter])
 
   const params = {
     SourceImage: {
       S3Object: {
-        Bucket: 'easylearnkyc94849-dev',
-        Name: `public/Pre-Enrollment/${enrollee.LastName}${enrollee.FirstName}${enrollee.MiddleName}`
+        Bucket: "easylearnkyc94849-dev",
+        Name: `public/Pre-Enrollment/${enrollee.LastName}${enrollee.FirstName}${enrollee.MiddleName}`,
       },
     },
     TargetImage: {
       S3Object: {
-        Bucket: 'easylearnkyc94849-dev',
+        Bucket: "easylearnkyc94849-dev",
         Name: `public/Pre-Enrollment/Webcam/${enrollee.LastName}${enrollee.FirstName}${enrollee.MiddleName}`,
-    }   
+      },
+    },
   }
-}
+
 
   const detectFaces = async () => {
+    setIsLoading(true)
     const command = new CompareFacesCommand(params)
-    await rekognitionClient.send(command)
-    .then(data => {
-      console.log(data)
-      if (data.FaceMatches.length == 0){
-        alert("No Match")
-      } else {
-        alert("Match")
-      }
-    }).catch(err => {
-      alert('No match')
-    })
+    await rekognitionClient
+      .send(command)
+      .then((data) => {
+        console.log(data)
+        if (data.FaceMatches.length == 0) {
+         router.push('/Error')
+        } else {
+          addEnrollee()
+          router.push("/Step3")
+        }
+      })
+      .catch((err) => {
+        router.push("/Error")
+      })
   }
+
+  const addEnrollee = async () => {
+    await API.graphql(
+      graphqlOperation(createEnrollees, {
+        input: {
+          ...enrollee,
+        },
+      })
+    )
+  }
+
   
-  
+
   return (
-    <Layout title={'Step 2 - Facial Identity'}>
-      <StepIndicator stepColor2={"bg-highlight"} stepColor3={"bg-secondary"} />
+    <Layout title={"Step 2 - Facial Identity"}>
+      {!isLoading&& <><StepIndicator stepColor2={"bg-highlight"} stepColor3={"bg-secondary"} />
       <div className='container mx-auto text-center space-y-4 sm:my-4'>
-        <h3 className='font-bold text-2xl text-left sm:text-center'>Let&apos;s take a picture of you</h3>
+        <h3 className='font-bold text-2xl text-left sm:text-center'>
+          Let&apos;s take a picture of you
+        </h3>
         <div className='relative mx-auto w-max sm:w-full flex'>
           <Webcam
             audio={false}
@@ -97,15 +123,43 @@ const Step2 = () => {
             screenshotFormat='image/jpeg'
             ref={webcamRef}
             width={480}
-            onUserMedia={()=>{setShowBtnCapture(true)}}
+            onUserMedia={() => {
+              setShowBtnCapture(true)
+            }}
           />
-         {counter>0 && <div className="h-full w-full absolute flex justify-center items-center">
-            <p className="font-extrabold text-white text-6xl">{counter}</p>
-          </div>}
+          {counter > 0 && (
+            <div className='h-full w-full absolute flex justify-center items-center'>
+              <p className='font-extrabold text-white text-6xl'>{counter}</p>
+            </div>
+          )}
         </div>
-        {showBtnCapture&&<button onClick={captureImg} className="bg-slate-700 p-3 text-white w-32">Capture</button>}
+        {showBtnCapture && (
+          <button
+            onClick={captureImg}
+            className='bg-slate-700 p-3 text-white w-32'
+          >
+            Capture
+          </button>
+        )}
       </div>
-      <Button link={'/Step3'}  btnText={'NEXT'} btnType={'button'}/>
+      <div onClick={() => {detectFaces()}} className="sm:flex  justify-end">
+            <button className='bg-tertiary text-white w-52 sm:w-40 h-16 sm:h-14 rounded-md flex justify-evenly items-center absolute sm:static bottom-4 right-5' type ='button'>
+                <p className='text-center text-xl sm:text-lg font-semibold leading-[4rem]'>NEXT</p>
+                <Image className='fill-white'   src={'/icons/arrow-right-thin.svg'} height={30} width={30}/>
+            </button>
+      </div></>}
+
+      {isLoading && <div className='z-50  absolute mx-auto inset-0 flex flex-col justify-center items-center gap-y-7'>
+        <CircleLoader
+          color={"#0000FF"}
+          className='my-auto'
+          loading={isLoading}
+          size={150}
+        />
+        <h3 className='text-3xl sm:text-xl font-bold'>
+          Face Cross Matching Please wait ...
+        </h3>
+      </div>}
     </Layout>
   )
 }
