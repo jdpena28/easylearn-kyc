@@ -15,12 +15,7 @@ const App = () => {
   const {enrollee,setEnrollee} = useContext(DataContext)
   const imgRef = useRef('')
   
-  const addEnrollee = async () => {
-    /* await API.graphql(graphqlOperation(createEnrollees, {
-      input: {
-        ...enrollee
-      }
-    })) */
+  const uploadImage = () => {
     Storage.put(`Pre-Enrollment/${enrollee.LastName}${enrollee.FirstName}${enrollee.MiddleName}`, imgRef.current.files[0]) 
   }
   
@@ -92,7 +87,7 @@ const App = () => {
                 </div>
               </div>
             </div>
-            <div onClick={addEnrollee}>
+            <div onClick={uploadImage}>
             <Button link={'/Step2'} btnText="NEXT" btnType={"button"}/>
             </div>
           </form>

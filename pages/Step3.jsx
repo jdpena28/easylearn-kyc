@@ -4,38 +4,12 @@ import Layout from "../src/components/Layout"
 import StepIndicator from "../src/components/StepIndicator"
 import Button from "../src/components/Button"
 
-import CircleLoader from "react-spinners/CircleLoader"
-
-import DataContext from "../src/context/DataContext"
-import { useContext } from "react"
-
 
 const Step3 = () => {
-  const [isLoading, setIsLoading] = useState(true)
-  const {enrollee} = useContext(DataContext)
-  useEffect(() => {
-    setTimeout(() => {
-      setIsLoading(false)
-    }, 2000)
-  }, [])
-
- 
   return (
     <Layout title={"Step 3 - Succesfully Verified"}>
       <StepIndicator stepColor2={"bg-highlight"} stepColor3={"bg-highlight"} />
       <div className=' w-max sm:w-full h-max  absolute text-center inset-0 m-auto'>
-        {isLoading ? (
-          <div className="flex flex-col justify-center items-center gap-y-7">
-            <CircleLoader
-              color={"#0000FF"}
-              className=''
-              loading={isLoading}
-              size={150}
-            />
-            <h3 className='text-3xl font-bold'>Face Cross Matching Please wait ...</h3>
-          </div>
-        ) : (
-          <>
             <Image
               src={"/success.webp"}
               alt='green checkmark'
@@ -47,8 +21,6 @@ const Step3 = () => {
               You have been successfully verified. <br /> You can now go back to
               take your course.
             </p>
-          </>
-        )}
       </div>
       <Button
         btnType={"button"}
