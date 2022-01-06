@@ -7,8 +7,8 @@ import { useContext, useRef, useEffect } from "react"
 import DataContext from "../src/context/DataContext"
 import { Storage } from "aws-amplify"
 
-import { createVoucher } from "../src/graphql/mutations"
-import { API, graphqlOperation } from "aws-amplify"
+
+
 
 const App = () => {
   const { enrollee, setEnrollee } = useContext(DataContext)
