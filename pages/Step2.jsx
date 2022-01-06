@@ -40,12 +40,13 @@ const Step2 = () => {
   const screenshot = useCallback(() => {
     const based64Image = webcamRef.current.getScreenshot()
     const type = based64Image.split(";")[0].split("/")[1]
+    const fullName = `${enrollee.LastName}${enrollee.FirstName}${enrollee.MiddleName}`.replaceAll(" ","")
     const image = new Buffer.from(
       based64Image.replace(/^data:image\/\w+;base64,/, ""),
       "base64"
     )
     Storage.put(
-      `Pre-Enrollment/Webcam/${enrollee.LastName}${enrollee.FirstName}${enrollee.MiddleName}`,
+      `Pre-Enrollment/Webcam/${fullName}`,
       image,
       {
         contentType: `image/${type}`, // return a jpeg type
@@ -65,13 +66,13 @@ const Step2 = () => {
     SourceImage: {
       S3Object: {
         Bucket: "easylearnkyc94849-dev",
-        Name: `public/Pre-Enrollment/${enrollee.LastName}${enrollee.FirstName}${enrollee.MiddleName}`,
+        Name: `public/Pre-Enrollment/${fullName}`,
       },
     },
     TargetImage: {
       S3Object: {
         Bucket: "easylearnkyc94849-dev",
-        Name: `public/Pre-Enrollment/Webcam/${enrollee.LastName}${enrollee.FirstName}${enrollee.MiddleName}`,
+        Name: `public/Pre-Enrollment/Webcam/${fullName}`,
       },
     },
     SimilarityThreshold: 80

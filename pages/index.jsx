@@ -14,9 +14,9 @@ import {createEnrollees} from '../src/graphql/mutations'
 const App = () => {
   const {enrollee,setEnrollee} = useContext(DataContext)
   const imgRef = useRef('')
-  
+  const fullName = `${enrollee.LastName}${enrollee.FirstName}${enrollee.MiddleName}`.replaceAll(" ","")
   const uploadImage = () => {
-    Storage.put(`Pre-Enrollment/${enrollee.LastName}${enrollee.FirstName}${enrollee.MiddleName}`, imgRef.current.files[0]) 
+    Storage.put(`Pre-Enrollment/${fullName}`, imgRef.current.files[0]) 
   }
   
 
@@ -33,21 +33,21 @@ const App = () => {
                 label='Last Name'
                 placeholder='Doe'
                 onChange={(e) => {
-                  setEnrollee({ ...enrollee, LastName: e.target.value })
+                  setEnrollee({ ...enrollee, LastName: e.target.value.trim() })
                 }}
               />
               <Input
                 label='First Name'
                 placeholder='John'
                 onChange={(e) => {
-                  setEnrollee({ ...enrollee, FirstName: e.target.value })
+                  setEnrollee({ ...enrollee, FirstName: e.target.value.trim() })
                 }}
               />
               <Input
                 label='Middle Name'
                 placeholder='Michael'
                 onChange={(e) => {
-                  setEnrollee({ ...enrollee, MiddleName: e.target.value })
+                  setEnrollee({ ...enrollee, MiddleName: e.target.value.trim() })
                 }}
               />
             </div>
@@ -66,7 +66,7 @@ const App = () => {
                       name='lastName'
                       id='lastName'
                       onChange={(e) => {
-                        setEnrollee({ ...enrollee, Email: e.target.value })
+                        setEnrollee({ ...enrollee, Email: e.target.value.trim() })
                       }}
                       required
                       placeholder='johndoe@email.com'

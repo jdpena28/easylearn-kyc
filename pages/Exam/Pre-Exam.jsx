@@ -84,6 +84,7 @@ const App = () => {
     )
       .then((res) => {
         if (res.data.listEnrollees.items.length > 0) {
+          console.log(res.data.listEnrollees.items[0].id)
           imageUpload()
         } else {
           alert("It seems you are not verified enrollee")
@@ -92,17 +93,18 @@ const App = () => {
       .catch((err) => console.log(err))
   }
 
+  const fullName = `${enrollee.LastName}${enrollee.FirstName}${enrollee.MiddleName}`.replaceAll(" ","")
   const params = {
     SourceImage: {
       S3Object: {
         Bucket: "easylearnkyc94849-dev",
-        Name: `public/Pre-Exam-Webcam/${enrollee.LastName}${enrollee.FirstName}${enrollee.MiddleName}`,
+        Name: `public/Pre-Exam-Webcam/${fullName}`,
       },
     },
     TargetImage: {
       S3Object: {
         Bucket: "easylearnkyc94849-dev",
-        Name: `public/Pre-Enrollment/${enrollee.LastName}${enrollee.FirstName}${enrollee.MiddleName}`,
+        Name: `public/Pre-Enrollment/${fullName}`,
       },
     },
     SimilarityThreshold: 80
@@ -115,7 +117,7 @@ const App = () => {
       .send(command)
       .then((data) => {
         console.log(data)
-        if (data.FaceMatches.length == 0) {
+        if (data.FaceMatches.length === 0) {
           router.push('/Exam/Error')
         } else {
           router.push("/Exam/ExamCoupon")
@@ -138,21 +140,21 @@ const App = () => {
                 label='Last Name'
                 placeholder='Doe'
                 onChange={(e) => {
-                  setEnrollee({ ...enrollee, LastName: e.target.value })
+                  setEnrollee({ ...enrollee, LastName: e.target.value.trim() })
                 }}
               />
               <Input
                 label='First Name'
                 placeholder='John'
                 onChange={(e) => {
-                  setEnrollee({ ...enrollee, FirstName: e.target.value })
+                  setEnrollee({ ...enrollee, FirstName: e.target.value.trim() })
                 }}
               />
               <Input
                 label='Middle Name'
                 placeholder='Michael'
                 onChange={(e) => {
-                  setEnrollee({ ...enrollee, MiddleName: e.target.value })
+                  setEnrollee({ ...enrollee, MiddleName: e.target.value.trim() })
                 }}
               />
             </div>
