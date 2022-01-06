@@ -10,7 +10,7 @@ type Enrollees @model @auth(rules: [{ allow: public, operations: [create, read] 
   Email: String!
 }
 
-type Voucher @model @auth(rules: [{ allow: public, operations: [create, read] }]) {
+type Voucher @model @auth(rules: [{ allow: public, operations: [create, read,update] }]) {
   id: ID!
   VoucherCode: String!
   Enrollee_ID: String
