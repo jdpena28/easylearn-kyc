@@ -34,3 +34,32 @@ export const listEnrollees = /* GraphQL */ `
     }
   }
 `;
+export const getVoucher = /* GraphQL */ `
+  query GetVoucher($id: ID!) {
+    getVoucher(id: $id) {
+      id
+      VoucherCode
+      Enrollee_ID
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listVouchers = /* GraphQL */ `
+  query ListVouchers(
+    $filter: ModelVoucherFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listVouchers(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        VoucherCode
+        Enrollee_ID
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;

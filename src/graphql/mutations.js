@@ -49,3 +49,45 @@ export const deleteEnrollees = /* GraphQL */ `
     }
   }
 `;
+export const createVoucher = /* GraphQL */ `
+  mutation CreateVoucher(
+    $input: CreateVoucherInput!
+    $condition: ModelVoucherConditionInput
+  ) {
+    createVoucher(input: $input, condition: $condition) {
+      id
+      VoucherCode
+      Enrollee_ID
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateVoucher = /* GraphQL */ `
+  mutation UpdateVoucher(
+    $input: UpdateVoucherInput!
+    $condition: ModelVoucherConditionInput
+  ) {
+    updateVoucher(input: $input, condition: $condition) {
+      id
+      VoucherCode
+      Enrollee_ID
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteVoucher = /* GraphQL */ `
+  mutation DeleteVoucher(
+    $input: DeleteVoucherInput!
+    $condition: ModelVoucherConditionInput
+  ) {
+    deleteVoucher(input: $input, condition: $condition) {
+      id
+      VoucherCode
+      Enrollee_ID
+      createdAt
+      updatedAt
+    }
+  }
+`;

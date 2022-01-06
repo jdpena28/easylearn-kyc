@@ -40,3 +40,36 @@ export const onDeleteEnrollees = /* GraphQL */ `
     }
   }
 `;
+export const onCreateVoucher = /* GraphQL */ `
+  subscription OnCreateVoucher {
+    onCreateVoucher {
+      id
+      VoucherCode
+      Enrollee_ID
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateVoucher = /* GraphQL */ `
+  subscription OnUpdateVoucher {
+    onUpdateVoucher {
+      id
+      VoucherCode
+      Enrollee_ID
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteVoucher = /* GraphQL */ `
+  subscription OnDeleteVoucher {
+    onDeleteVoucher {
+      id
+      VoucherCode
+      Enrollee_ID
+      createdAt
+      updatedAt
+    }
+  }
+`;
