@@ -1,8 +1,10 @@
-import { useState, useEffect } from "react"
+import { useEffect, useContext } from "react"
 import Image from "next/image"
 import Layout from "../src/components/Layout"
 import StepIndicator from "../src/components/StepIndicator"
 import Button from "../src/components/Button"
+
+
 
 
 const Step3 = () => {

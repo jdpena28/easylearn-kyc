@@ -19,7 +19,7 @@ import {useRouter} from 'next/router'
 import { Storage } from "aws-amplify"
 
 const App = () => {
-  const {enrollee,setEnrollee} = useContext(DataContext)
+  const {enrollee,setEnrollee,setID} = useContext(DataContext)
   const webcamRef = useRef(null)
   const [openCamera, setOpenCamera] = useState(false)
   const [showBtnCapture, setShowBtnCapture] = useState(false)
@@ -84,13 +84,13 @@ const App = () => {
     )
       .then((res) => {
         if (res.data.listEnrollees.items.length > 0) {
-          console.log(res.data.listEnrollees.items[0].id)
           imageUpload()
+          setID(res.data.listEnrollees.items[0].id)
         } else {
           alert("It seems you are not verified enrollee")
         }
       })
-      .catch((err) => console.log(err))
+      .catch((err) => {})
   }
 
   const fullName = `${enrollee.LastName}${enrollee.FirstName}${enrollee.MiddleName}`.replace(/\s/g, '')
@@ -116,7 +116,6 @@ const App = () => {
     await rekognitionClient
       .send(command)
       .then((data) => {
-        console.log(data)
         if (data.FaceMatches.length === 0) {
           router.push('/Exam/Error')
         } else {

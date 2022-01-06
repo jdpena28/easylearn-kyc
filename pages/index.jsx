@@ -3,29 +3,35 @@ import StepIndicator from "../src/components/StepIndicator"
 import Input from "../src/components/Input"
 import Button from "../src/components/Button"
 import Image from "next/image"
-import {useContext,useRef} from "react"
+import { useContext, useRef, useEffect } from "react"
 import DataContext from "../src/context/DataContext"
+import { Storage } from "aws-amplify"
 
-import { Storage } from 'aws-amplify'
-
+import { createVoucher } from "../src/graphql/mutations"
+import { API, graphqlOperation } from "aws-amplify"
 
 const App = () => {
-  const {enrollee,setEnrollee} = useContext(DataContext)
-  const imgRef = useRef('')
-  const fullName = `${enrollee.LastName}${enrollee.FirstName}${enrollee.MiddleName}`.replace(/\s/g, '')
+  const { enrollee, setEnrollee } = useContext(DataContext)
+  const imgRef = useRef("")
+  const fullName =
+    `${enrollee.LastName}${enrollee.FirstName}${enrollee.MiddleName}`.replace(
+      /\s/g,
+      ""
+    )
   const uploadImage = () => {
-    Storage.put(`Pre-Enrollment/${fullName}`, imgRef.current.files[0]) 
+    Storage.put(`Pre-Enrollment/${fullName}`, imgRef.current.files[0])
   }
-  
+
 
   return (
-    <Layout title={'Step 1 - Personal Information'}>
+    <Layout title={"Step 1 - Personal Information"}>
       <StepIndicator stepColor2={"bg-secondary"} stepColor3={"bg-secondary"} />
       <div className='container mx-auto'>
-        <h3 className='font-bold text-2xl sm:text-center sm:mt-4'>Personal Information</h3>
+        <h3 className='font-bold text-2xl sm:text-center sm:mt-4'>
+          Personal Information
+        </h3>
         <div className='mx-auto max-w-6xl sm:max-w-full'>
-
-          <form  className='space-y-2'>
+          <form className='space-y-2'>
             <div className='flex sm:block justify-between mt-3 sm:space-y-2'>
               <Input
                 label='Last Name'
@@ -45,11 +51,14 @@ const App = () => {
                 label='Middle Name'
                 placeholder='Michael'
                 onChange={(e) => {
-                  setEnrollee({ ...enrollee, MiddleName: e.target.value.trim() })
+                  setEnrollee({
+                    ...enrollee,
+                    MiddleName: e.target.value.trim(),
+                  })
                 }}
               />
             </div>
-            
+
             <div className='grid sm:block grid-cols-5 justify-end sm:space-y-2'>
               <div className='space-y-2'>
                 <div className='flex sm:block w-full'>
@@ -64,7 +73,10 @@ const App = () => {
                       name='lastName'
                       id='lastName'
                       onChange={(e) => {
-                        setEnrollee({ ...enrollee, Email: e.target.value.trim() })
+                        setEnrollee({
+                          ...enrollee,
+                          Email: e.target.value.trim(),
+                        })
                       }}
                       required
                       placeholder='johndoe@email.com'
@@ -76,17 +88,28 @@ const App = () => {
                   *This will be used for final exam to verify your identity. See
                   the sample image for reference.
                 </p>
-                <input ref={imgRef} type='file' id='img' name='img' accept='image/*'></input>
+                <input
+                  ref={imgRef}
+                  type='file'
+                  id='img'
+                  name='img'
+                  accept='image/*'
+                ></input>
               </div>
               <div className='col-span-3 col-start-3'>
                 <h4 className='font-semibold text-2xl'>Example</h4>
                 <div className='h-max w-[66%] sm:w-full p-2 sm:p-0 bg-gray-200'>
-                  <Image src={'/sample_id.webp'} alt="Sample ID Pic" width={441} height={282}/>
+                  <Image
+                    src={"/sample_id.webp"}
+                    alt='Sample ID Pic'
+                    width={441}
+                    height={282}
+                  />
                 </div>
               </div>
             </div>
             <div onClick={uploadImage}>
-            <Button link={'/Step2'} btnText="NEXT" btnType={"button"}/>
+              <Button link={"/Step2"} btnText='NEXT' btnType={"button"} />
             </div>
           </form>
         </div>

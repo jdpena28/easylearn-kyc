@@ -9,8 +9,9 @@ export const DataProvider = ({children}) => {
         MiddleName:'',
         Email:'',
     });
+    const [id,setID] = useState('');
     return (
-    <DataContext.Provider value={{enrollee, setEnrollee}}>{children}</DataContext.Provider>
+    <DataContext.Provider value={{enrollee, setEnrollee,setID,id}}>{children}</DataContext.Provider>
     )
 }
 
