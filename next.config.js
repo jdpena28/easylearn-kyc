@@ -1,7 +1,7 @@
 module.exports = {
   reactStrictMode: true,
   env: {
-    ACCESS_KEY: process.env.ACCESS_KEY,
-    SECRET_KEY: process.env.SECRET_KEY,
+    NEXT_PUBLIC_ACCESS_KEY: process.env.NEXT_PUBLIC_ACCESS_KEY,
+    NEXT_PUBLIC_SECRET_KEY: process.env.NEXT_PUBLIC_SECRET_KEY,
   }
 }
