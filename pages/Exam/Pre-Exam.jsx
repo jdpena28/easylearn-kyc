@@ -93,7 +93,7 @@ const App = () => {
       .catch((err) => console.log(err))
   }
 
-  const fullName = `${enrollee.LastName}${enrollee.FirstName}${enrollee.MiddleName}`.replaceAll(" ","")
+  const fullName = `${enrollee.LastName}${enrollee.FirstName}${enrollee.MiddleName}`.replace(/\s/g, '')
   const params = {
     SourceImage: {
       S3Object: {

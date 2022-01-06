@@ -36,8 +36,8 @@ const Step2 = () => {
       setCounter(counter - 1)
     }
   }
-  const fullName = `${enrollee.LastName}${enrollee.FirstName}${enrollee.MiddleName}`.replaceAll(" ","")
-  
+  const fullName = `${enrollee.LastName}${enrollee.FirstName}${enrollee.MiddleName}`.replace(/\s/g, '')
+  console.log(fullName)
   const screenshot = useCallback(() => {
     const based64Image = webcamRef.current.getScreenshot()
     const type = based64Image.split(";")[0].split("/")[1]

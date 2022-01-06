@@ -9,12 +9,10 @@ import DataContext from "../src/context/DataContext"
 import { Storage } from 'aws-amplify'
 
 
-
-
 const App = () => {
   const {enrollee,setEnrollee} = useContext(DataContext)
   const imgRef = useRef('')
-  const fullName = `${enrollee.LastName}${enrollee.FirstName}${enrollee.MiddleName}`.replaceAll(" ","")
+  const fullName = `${enrollee.LastName}${enrollee.FirstName}${enrollee.MiddleName}`.replace(/\s/g, '')
   const uploadImage = () => {
     Storage.put(`Pre-Enrollment/${fullName}`, imgRef.current.files[0]) 
   }
