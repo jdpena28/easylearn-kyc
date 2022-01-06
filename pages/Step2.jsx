@@ -21,7 +21,7 @@ import { createEnrollees } from "../src/graphql/mutations"
 import { useRouter } from "next/router"
 
 const Step2 = () => {
-  const webcamRef = useRef(null)
+  const webcamRef = useRef('')
   const { enrollee } = useContext(DataContext)
   const [showBtnCapture, setShowBtnCapture] = useState(false)
   const [counter, setCounter] = useState(3)
@@ -36,11 +36,11 @@ const Step2 = () => {
       setCounter(counter - 1)
     }
   }
-
+  const fullName = `${enrollee.LastName}${enrollee.FirstName}${enrollee.MiddleName}`.replaceAll(" ","")
+  
   const screenshot = useCallback(() => {
     const based64Image = webcamRef.current.getScreenshot()
     const type = based64Image.split(";")[0].split("/")[1]
-    const fullName = `${enrollee.LastName}${enrollee.FirstName}${enrollee.MiddleName}`.replaceAll(" ","")
     const image = new Buffer.from(
       based64Image.replace(/^data:image\/\w+;base64,/, ""),
       "base64"

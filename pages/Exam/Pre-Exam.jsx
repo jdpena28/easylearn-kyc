@@ -54,7 +54,7 @@ const App = () => {
       "base64"
     )
     Storage.put(
-      `Pre-Exam-Webcam/${enrollee.LastName}${enrollee.FirstName}${enrollee.MiddleName}`,
+      `Pre-Exam-Webcam/${fullName}`,
       image,
       {
         contentType: `image/${type}`, // return a jpeg type
