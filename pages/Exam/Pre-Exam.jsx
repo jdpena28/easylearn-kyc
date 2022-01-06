@@ -18,6 +18,9 @@ import {useRouter} from 'next/router'
 
 import { Storage } from "aws-amplify"
 
+import { ToastContainer, toast } from "react-toastify"
+import "react-toastify/dist/ReactToastify.css"
+
 const App = () => {
   const {enrollee,setEnrollee,setID} = useContext(DataContext)
   const webcamRef = useRef(null)
@@ -26,6 +29,8 @@ const App = () => {
   const [counter, setCounter] = useState(3)
   const [imgsrc, setImgsrc] = useState('')
   const [isLoading, setIsLoading] = useState(false)
+
+  
   
 
   const router = useRouter()
@@ -42,8 +47,13 @@ const App = () => {
     counter == 0 && screenshot()
   }, [counter])
 
+  const notifyCapture = () => toast("Image Captured",{
+    icon:({theme, type}) =>  <h3 className="text-xl">📸</h3>
+})
+
   const screenshot = useCallback(() => {
     setImgsrc(webcamRef.current.getScreenshot())
+    notifyCapture()
   }, [webcamRef])
 
   const imageUpload = async () => {
@@ -64,6 +74,8 @@ const App = () => {
       detectFaces()
     })
   }
+
+  const notify = () => toast.error("It seems you are not verified")
 
   // fetch data from API and check if enrollee is already in the database
   const checkEnrollee = async () => {
@@ -87,7 +99,7 @@ const App = () => {
           imageUpload()
           setID(res.data.listEnrollees.items[0].id)
         } else {
-          alert("It seems you are not verified enrollee")
+          notify()
         }
       })
       .catch((err) => {})
@@ -270,6 +282,12 @@ const App = () => {
           Face Cross Matching Please wait ...
         </h3>
       </div>}
+      <ToastContainer
+        position='bottom-center'
+        autoClose={3000}
+        pauseOnHover={false}
+        theme="dark"
+      />
     </Layout>
   )
 }

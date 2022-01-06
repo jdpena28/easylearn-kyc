@@ -1,8 +1,7 @@
-import { useRef, useCallback, useState, useContext,useEffect } from "react"
-import Image from 'next/image'
+import { useRef, useCallback, useState, useContext, useEffect } from "react"
+import Image from "next/image"
 import Layout from "../src/components/Layout"
 import StepIndicator from "../src/components/StepIndicator"
-import Button from "../src/components/Button"
 import Webcam from "react-webcam"
 import CircleLoader from "react-spinners/CircleLoader"
 
@@ -20,8 +19,11 @@ import { createEnrollees } from "../src/graphql/mutations"
 
 import { useRouter } from "next/router"
 
+import { ToastContainer, toast } from "react-toastify"
+import "react-toastify/dist/ReactToastify.css"
+
 const Step2 = () => {
-  const webcamRef = useRef('')
+  const webcamRef = useRef("")
   const { enrollee } = useContext(DataContext)
   const [showBtnCapture, setShowBtnCapture] = useState(false)
   const [counter, setCounter] = useState(3)
@@ -36,8 +38,12 @@ const Step2 = () => {
       setCounter(counter - 1)
     }
   }
-  const fullName = `${enrollee.LastName}${enrollee.FirstName}${enrollee.MiddleName}`.replace(/\s/g, '')
-  console.log(fullName)
+  const fullName = `${enrollee.LastName}${enrollee.FirstName}${enrollee.MiddleName}`.replace(/\s/g,"")
+    
+  const notify = () => toast("Image Captured",{
+      icon:({theme, type}) =>  <h3 className="text-xl">📸</h3>
+  })
+
   const screenshot = useCallback(() => {
     const based64Image = webcamRef.current.getScreenshot()
     const type = based64Image.split(";")[0].split("/")[1]
@@ -45,15 +51,11 @@ const Step2 = () => {
       based64Image.replace(/^data:image\/\w+;base64,/, ""),
       "base64"
     )
-    Storage.put(
-      `Pre-Enrollment/Webcam/${fullName}`,
-      image,
-      {
-        contentType: `image/${type}`, // return a jpeg type
-        contentEncoding: "base64",
-      }
-    ).then(() => {
-      alert("Image saved")
+    Storage.put(`Pre-Enrollment/Webcam/${fullName}`, image, {
+      contentType: `image/${type}`, // return a jpeg type
+      contentEncoding: "base64",
+    }).then(() => {
+      notify()
     })
   }, [webcamRef])
 
@@ -75,9 +77,8 @@ const Step2 = () => {
         Name: `public/Pre-Enrollment/Webcam/${fullName}`,
       },
     },
-    SimilarityThreshold: 80
+    SimilarityThreshold: 80,
   }
-
 
   const detectFaces = async () => {
     setIsLoading(true)
@@ -85,9 +86,8 @@ const Step2 = () => {
     await rekognitionClient
       .send(command)
       .then((data) => {
-        console.log(data)
         if (data.FaceMatches.length == 0) {
-         router.push('/Error')
+          router.push("/Error")
         } else {
           addEnrollee()
           router.push("/Step3")
@@ -108,60 +108,90 @@ const Step2 = () => {
     )
   }
 
-  
-
   return (
     <Layout title={"Step 2 - Facial Identity"}>
-      {!isLoading&& <><StepIndicator stepColor2={"bg-highlight"} stepColor3={"bg-secondary"} />
-      <div className='container mx-auto text-center space-y-4 sm:my-4'>
-        <h3 className='font-bold text-2xl text-left sm:text-center'>
-          Let&apos;s take a picture of you
-        </h3>
-        <div className='relative mx-auto w-max sm:w-full flex'>
-          <Webcam
-            audio={false}
-            mirrored={true}
-            className='mx-auto sm:w-full'
-            screenshotFormat='image/jpeg'
-            ref={webcamRef}
-            width={480}
-            onUserMedia={() => {
-              setShowBtnCapture(true)
-            }}
+      {!isLoading && (
+        <>
+          <StepIndicator
+            stepColor2={"bg-highlight"}
+            stepColor3={"bg-secondary"}
           />
-          {counter > 0 && (
-            <div className='h-full w-full absolute flex justify-center items-center'>
-              <p className='font-extrabold text-white text-6xl'>{counter}</p>
+          <div className='container mx-auto text-center space-y-4 sm:my-4'>
+            <h3 className='font-bold text-2xl text-left sm:text-center'>
+              Let&apos;s take a picture of you
+            </h3>
+            <div className='relative mx-auto w-max sm:w-full flex'>
+              <Webcam
+                audio={false}
+                mirrored={true}
+                className='mx-auto sm:w-full'
+                screenshotFormat='image/jpeg'
+                ref={webcamRef}
+                width={480}
+                onUserMedia={() => {
+                  setShowBtnCapture(true)
+                }}
+              />
+              {counter > 0 && (
+                <div className='h-full w-full absolute flex justify-center items-center'>
+                  <p className='font-extrabold text-white text-6xl'>
+                    {counter}
+                  </p>
+                </div>
+              )}
             </div>
-          )}
-        </div>
-        {showBtnCapture && (
-          <button
-            onClick={captureImg}
-            className='bg-slate-700 p-3 text-white w-32'
+            {showBtnCapture && (
+              <button
+                onClick={captureImg}
+                className='bg-slate-700 p-3 text-white w-32'
+              >
+                Capture
+              </button>
+            )}
+          </div>
+          <div
+            onClick={() => {
+              detectFaces()
+            }}
+            className='sm:flex  justify-end'
           >
-            Capture
-          </button>
-        )}
-      </div>
-      <div onClick={() => {detectFaces()}} className="sm:flex  justify-end">
-            <button className='bg-tertiary text-white w-52 sm:w-40 h-16 sm:h-14 rounded-md flex justify-evenly items-center absolute sm:static bottom-4 right-5' type ='button'>
-                <p className='text-center text-xl sm:text-lg font-semibold leading-[4rem]'>NEXT</p>
-                <Image className='fill-white'   src={'/icons/arrow-right-thin.svg'} height={30} width={30}/>
+            <button
+              className='bg-tertiary text-white w-52 sm:w-40 h-16 sm:h-14 rounded-md flex justify-evenly items-center absolute sm:static bottom-4 right-5'
+              type='button'
+            >
+              <p className='text-center text-xl sm:text-lg font-semibold leading-[4rem]'>
+                NEXT
+              </p>
+              <Image
+                className='fill-white'
+                src={"/icons/arrow-right-thin.svg"}
+                height={30}
+                width={30}
+              />
             </button>
-      </div></>}
+          </div>
+        </>
+      )}
 
-      {isLoading && <div className='z-50  absolute mx-auto inset-0 flex flex-col justify-center items-center gap-y-7'>
-        <CircleLoader
-          color={"#0000FF"}
-          className='my-auto'
-          loading={isLoading}
-          size={150}
-        />
-        <h3 className='text-3xl sm:text-xl font-bold'>
-          Face Cross Matching Please wait ...
-        </h3>
-      </div>}
+      {isLoading && (
+        <div className='z-50  absolute mx-auto inset-0 flex flex-col justify-center items-center gap-y-7'>
+          <CircleLoader
+            color={"#0000FF"}
+            className='my-auto'
+            loading={isLoading}
+            size={150}
+          />
+          <h3 className='text-3xl sm:text-xl font-bold'>
+            Face Cross Matching Please wait ...
+          </h3>
+        </div>
+      )}
+      <ToastContainer
+        position='bottom-center'
+        autoClose={1500}
+        pauseOnHover={false}
+        theme="dark"
+      />
     </Layout>
   )
 }
