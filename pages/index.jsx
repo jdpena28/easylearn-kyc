@@ -6,8 +6,8 @@ import Image from "next/image"
 import {useContext,useRef} from "react"
 import DataContext from "../src/context/DataContext"
 
-import { API, graphqlOperation, Storage } from 'aws-amplify'
-import {createEnrollees} from '../src/graphql/mutations'
+import { Storage } from 'aws-amplify'
+
 
 
 
